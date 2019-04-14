@@ -14,6 +14,7 @@ class OpenKlipsDatabaseInitializer(private val userService: UserService) {
     fun initializeAll() {
         userService.createUser(maxMustermann())
         userService.createUser(lieschenMueller())
+        userService.createUser(bertoltBrecht())
     }
 
     /**
@@ -27,12 +28,14 @@ class OpenKlipsDatabaseInitializer(private val userService: UserService) {
                 city = "Hamburg",
                 additionalDetails = null)
 
+        val roles = listOf(Student(studentId = 1234567L))
+
         return User(firstName = "Max",
                 lastName = "Mustermann",
                 title = null,
                 address = address,
                 username = "mustermannm1",
-                role = Student(studentId = 1234567L))
+                roles = roles)
     }
 
     /**
@@ -46,12 +49,36 @@ class OpenKlipsDatabaseInitializer(private val userService: UserService) {
                 city = "Köln",
                 additionalDetails = null)
 
+        val roles = listOf(Instructor())
+
         return User(firstName = "Lieschen",
                 lastName = "Müller",
                 title = "Dr.",
                 address = address,
                 username = "muellerl1",
-                role = Instructor())
+                roles = roles)
+    }
+
+    /**
+     * Bertolt Brecht is both a student and a professor.
+     */
+    private fun bertoltBrecht(): User {
+        val address = Address(country = "DE",
+                streetName = "Chausseestraße",
+                houseNumber = "185",
+                zipCode = "10115",
+                city = "Berlin",
+                additionalDetails = null)
+
+
+        val roles = listOf(Instructor(), Student(studentId = 654545L))
+
+        return User(firstName = "Bertolt",
+                lastName = "Brecht",
+                title = "Dr.",
+                address = address,
+                username = "brechtb33",
+                roles = roles)
     }
 
 }

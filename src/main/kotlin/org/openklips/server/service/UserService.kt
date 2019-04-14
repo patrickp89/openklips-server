@@ -39,8 +39,8 @@ class UserService(private val userRepository: UserRepository) {
             log.info("Couldn't find a user with username '$username'!")
             null
         } else {
-            log.debug("Found 1 role")
-            listOf(user.role)
+            log.debug("Found ${user.roles.size} role(s)")
+            user.roles
         }
     }
 

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class StudentController(val studentService: StudentService) {
+class StudentController(
+        private val studentService: StudentService
+) {
 
     val log: Logger = LoggerFactory.getLogger(StudentController::class.java)
 

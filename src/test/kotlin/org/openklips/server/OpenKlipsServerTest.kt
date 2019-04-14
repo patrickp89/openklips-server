@@ -35,8 +35,6 @@ class OpenKlipsServerTest {
         val user: User? = userService.getUser("mustermannm1")
         assertThat(user, Is(not(nullValue())))
         val maxMustermann: User = user ?: throw Exception("This should not have happened!")
-        println("user is: $maxMustermann, id=${maxMustermann.id},"
-                + " ${maxMustermann.firstName} ${maxMustermann.lastName}, Role=${maxMustermann.role}")
 
         // what are his roles?
         val roles: List<Role>? = userService.getRoles(maxMustermann.username)

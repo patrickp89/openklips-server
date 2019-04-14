@@ -17,6 +17,6 @@ class User(
         @Column(unique = true)
         val username: String, // the username, used for logins
 
-        @OneToOne(cascade = [CascadeType.ALL]) // TODO: make OneToMany!
-        val role: Role
+        @OneToMany(cascade = [CascadeType.ALL])
+        val roles: List<Role>
 )
