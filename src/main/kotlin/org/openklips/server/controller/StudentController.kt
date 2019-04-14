@@ -14,11 +14,6 @@ class StudentController(val studentService: StudentService) {
 
     val log: Logger = LoggerFactory.getLogger(StudentController::class.java)
 
-    @RequestMapping("/student/count")
-    fun studentCount(): Long {
-        return studentService.getStudentCount()
-    }
-
     @RequestMapping("/student/{id}")
     fun getStudent(@PathVariable id: Long): ResponseEntity<Student> {
         log.debug("ID was: $id")

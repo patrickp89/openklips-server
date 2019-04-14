@@ -9,7 +9,7 @@
     <name>openklips-server</name>
 
     <properties>
-        <kotlin.version>1.3.21</kotlin.version>
+        <kotlin.version>1.3.30</kotlin.version>
         <jdk.version>1.8</jdk.version>
         <maven.compiler-plugin.version>3.7.0</maven.compiler-plugin.version>
         <spring.boot.version>2.1.3.RELEASE</spring.boot.version>
@@ -54,6 +54,28 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <!-- The junit and hamcrest versions that spring-boot-starter-test
+                 depends on are out-of-date! -->
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-library</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <version>2.1</version>
@@ -71,6 +93,14 @@
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <!-- kotlin-test-junit depends on a junit version that
+                ships with an out-of-date version of hamcrest! -->
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
@@ -105,6 +135,9 @@
                 </executions>
                 <configuration>
                     <compilerPlugins>
+                        <!-- generate no-arg constructors for JPA entity classes: -->
+                        <plugin>jpa</plugin>
+                        <!-- enable Spring Boot repackaging etc.: -->
                         <plugin>spring</plugin>
                     </compilerPlugins>
                     <jvmTarget>${jdk.version}</jvmTarget>
@@ -116,6 +149,11 @@
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>

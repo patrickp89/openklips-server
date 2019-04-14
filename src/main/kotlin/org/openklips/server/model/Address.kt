@@ -12,7 +12,8 @@ class Address(
 
         val country: String, // TODO: create country enum...
         val zipCode: String,
+        val city: String,
         val streetName: String,
         val houseNumber: String,
         val additionalDetails: String?
-) {}
+)
