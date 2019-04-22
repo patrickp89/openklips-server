@@ -16,7 +16,6 @@ paths:
         - name: username
           in: path
           required: true
-          description: The id of the pet to retrieve
           schema:
             type: string
       responses:
@@ -71,6 +70,12 @@ components:
           type: string
         city:
           type: string
+        streetName:
+          type: string
+        houseNumber:
+          type: string
+        additionalDetails:
+          type: string
 
     RoleDto:
       properties:
@@ -78,7 +83,13 @@ components:
           type: integer
           format: int64
         roleType:
-          type: string
+          $ref: '#/components/schemas/RoleType'
+
+    RoleType:
+      type: string
+      enum:
+        - student
+        - instructor
 
     Error:
       required:

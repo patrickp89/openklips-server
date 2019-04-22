@@ -28,7 +28,10 @@ class OpenKlipsDatabaseInitializer(private val userService: UserService) {
                 city = "Hamburg",
                 additionalDetails = null)
 
-        val roles = listOf(Student(studentId = 1234567L))
+        val student = Student(studentId = 1234567L,
+                enrollments = listOf())
+
+        val roles = listOf(student)
 
         return User(firstName = "Max",
                 lastName = "Mustermann",
@@ -71,7 +74,10 @@ class OpenKlipsDatabaseInitializer(private val userService: UserService) {
                 additionalDetails = null)
 
 
-        val roles = listOf(Instructor(), Student(studentId = 654545L))
+        val student = Student(studentId = 654545L,
+                enrollments = listOf())
+
+        val roles = listOf(Instructor(), student)
 
         return User(firstName = "Bertolt",
                 lastName = "Brecht",
