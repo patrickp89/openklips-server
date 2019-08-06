@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import javax.transaction.Transactional
 
+/**
+ * A service that encapsulates all logic regarding users.
+ */
 @Component
 class UserService(private val userRepository: UserRepository) {
 

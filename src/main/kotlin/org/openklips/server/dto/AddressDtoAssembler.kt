@@ -2,7 +2,9 @@ package org.openklips.server.dto
 
 import org.openklips.server.model.Address
 import org.openklips.server.model.dto.AddressDto
+import org.springframework.stereotype.Component
 
+@Component
 class AddressDtoAssembler : DtoAssembler<Address, AddressDto> {
 
     override fun assemble(source: Address): AddressDto {

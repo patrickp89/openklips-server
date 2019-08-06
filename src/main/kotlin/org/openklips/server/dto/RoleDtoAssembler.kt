@@ -5,7 +5,9 @@ import org.openklips.server.model.Role
 import org.openklips.server.model.Student
 import org.openklips.server.model.dto.RoleDto
 import org.openklips.server.model.dto.RoleType
+import org.springframework.stereotype.Component
 
+@Component
 class RoleDtoAssembler : DtoAssembler<Role, RoleDto> {
 
     override fun assemble(source: Role): RoleDto {

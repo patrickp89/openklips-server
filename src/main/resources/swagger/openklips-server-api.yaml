@@ -31,6 +31,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /course:
+    get:
+      summary: Get all courses
+      operationId: getCourses
+      tags:
+        - course
+      responses:
+        '200':
+          description: An array of course objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseDto"
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
 components:
   schemas:
     UserDto:
@@ -90,6 +111,19 @@ components:
       enum:
         - student
         - instructor
+
+    CourseDto:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
 
     Error:
       required:

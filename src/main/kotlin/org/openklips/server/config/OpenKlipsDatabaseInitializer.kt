@@ -1,17 +1,23 @@
 package org.openklips.server.config
 
-import org.openklips.server.model.Address
-import org.openklips.server.model.Instructor
-import org.openklips.server.model.Student
-import org.openklips.server.model.User
+import org.openklips.server.model.*
+import org.openklips.server.service.CourseService
 import org.openklips.server.service.UserService
 
-class OpenKlipsDatabaseInitializer(private val userService: UserService) {
+class OpenKlipsDatabaseInitializer(
+        private val userService: UserService,
+        private val courseService: CourseService
+) {
 
     /**
      * Initializes the database with default data.
      */
     fun initializeAll() {
+        // create some test courses (these will be browsable without a login):
+        courseService.createCourse(effizienteAlgos())
+        courseService.createCourse(accounting101())
+
+        // create test users:
         userService.createUser(maxMustermann())
         userService.createUser(lieschenMueller())
         userService.createUser(bertoltBrecht())
@@ -85,6 +91,26 @@ class OpenKlipsDatabaseInitializer(private val userService: UserService) {
                 address = address,
                 username = "brechtb33",
                 roles = roles)
+    }
+
+    /**
+     * A comp sci course on algorithms.
+     */
+    private fun effizienteAlgos(): Course {
+        return Course(
+                name = "Effiziente Algos",
+                description = "Learn about efficient algorithms for combinatoriaal optimization problems."
+        )
+    }
+
+    /**
+     * A course on money, money, money.
+     */
+    private fun accounting101(): Course {
+        return Course(
+                name = "Accounting 101",
+                description = "Balance sheets, income and earnings. TL;DR -> MONEY!."
+        )
     }
 
 }

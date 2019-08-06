@@ -3,7 +3,9 @@ package org.openklips.server.dto
 import org.openklips.server.model.User
 import org.openklips.server.model.dto.RoleDto
 import org.openklips.server.model.dto.UserDto
+import org.springframework.stereotype.Component
 
+@Component
 class UserDtoAssembler(
         private val addressDtoAssembler: AddressDtoAssembler,
         private val roleDtoAssembler: RoleDtoAssembler
