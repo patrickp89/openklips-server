@@ -13,7 +13,11 @@ import javax.persistence.Id
 @Entity
 enum class DegreeType(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long = 0
+        var id: Long = 0,
+
+        val dt: String
 ) {
-    BACHELOR, MASTER, PHD
+    BACHELOR(dt = "BACHELOR"),
+    MASTER(dt = "MASTER"),
+    PHD(dt = "MASTER")
 }

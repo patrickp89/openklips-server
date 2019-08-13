@@ -2,12 +2,19 @@ package org.openklips.server.config
 
 import org.openklips.server.model.*
 import org.openklips.server.service.CourseService
+import org.openklips.server.service.StudyProgrammeService
 import org.openklips.server.service.UserService
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.*
 
 class OpenKlipsDatabaseInitializer(
         private val userService: UserService,
-        private val courseService: CourseService
+        private val courseService: CourseService,
+        private val studyProgrammeService: StudyProgrammeService
 ) {
+
+    private val defaultTimezoneId: ZoneId = ZoneId.of("ECT", ZoneId.SHORT_IDS)
 
     /**
      * Initializes the database with default data.
@@ -16,81 +23,116 @@ class OpenKlipsDatabaseInitializer(
         // create some test courses (these will be browsable without a login):
         courseService.createCourse(effizienteAlgos())
         courseService.createCourse(accounting101())
+        val ancientRoman203Course = courseService.createCourse(ancientRoman203())
+
+        // create a couple of test study programmes:
+        val mscLiterature = studyProgrammeService.createStudyProgramme(
+                studyProgramme = StudyProgramme(
+                        name = "Literatur",
+                        degreeType = DegreeType.MASTER,
+                        examinationRegulationVersion = "PO2015",
+                        courses = listOf(ancientRoman203Course)
+                )
+        )
 
         // create test users:
-        userService.createUser(maxMustermann())
+        userService.createUser(maxMustermann(listOf(), mscLiterature))
         userService.createUser(lieschenMueller())
         userService.createUser(bertoltBrecht())
     }
 
+
     /**
-     * Max Mustermann is a student only.
+     * Max Mustermann is a student only. He is enrolled in a
+     * M.Sc. in Literature.
      */
-    private fun maxMustermann(): User {
-        val address = Address(country = "DE",
+    private fun maxMustermann(courses: List<Course>, mscLiterature: StudyProgramme): User {
+        val address = Address(
+                country = "DE",
                 streetName = "Teststrasse",
                 houseNumber = "4",
                 zipCode = "123456",
                 city = "Hamburg",
-                additionalDetails = null)
+                additionalDetails = null
+        )
 
-        val student = Student(studentId = 1234567L,
-                enrollments = listOf())
+        val startDate = Date.from(
+                LocalDate
+                        .of(2019, 4, 1)
+                        .atStartOfDay(defaultTimezoneId)
+                        .toInstant()
+        )
+        val litEnrollment = Enrollment(
+                startDate = startDate,
+                courses = courses,
+                exams = listOf(),
+                studyProgramme = mscLiterature
+        )
 
-        val roles = listOf(student)
+        val student = Student(
+                studentId = 1234567L,
+                enrollments = listOf(litEnrollment)
+        )
 
-        return User(firstName = "Max",
+        return User(
+                firstName = "Max",
                 lastName = "Mustermann",
                 title = null,
                 address = address,
                 username = "mustermannm1",
-                roles = roles)
+                roles = listOf(student)
+        )
     }
 
     /**
      * Lieschen Müller is a professor.
      */
     private fun lieschenMueller(): User {
-        val address = Address(country = "DE",
+        val address = Address(
+                country = "DE",
                 streetName = "Leet Street",
                 houseNumber = "77",
                 zipCode = "76543",
                 city = "Köln",
-                additionalDetails = null)
+                additionalDetails = null
+        )
 
-        val roles = listOf(Instructor())
-
-        return User(firstName = "Lieschen",
+        return User(
+                firstName = "Lieschen",
                 lastName = "Müller",
                 title = "Dr.",
                 address = address,
                 username = "muellerl1",
-                roles = roles)
+                roles = listOf(Instructor())
+        )
     }
 
     /**
      * Bertolt Brecht is both a student and a professor.
      */
     private fun bertoltBrecht(): User {
-        val address = Address(country = "DE",
+        val address = Address(
+                country = "DE",
                 streetName = "Chausseestraße",
                 houseNumber = "185",
                 zipCode = "10115",
                 city = "Berlin",
-                additionalDetails = null)
+                additionalDetails = null
+        )
 
+        val student = Student(
+                studentId = 654545L,
+                enrollments = listOf()
+        )
 
-        val student = Student(studentId = 654545L,
-                enrollments = listOf())
-
-        val roles = listOf(Instructor(), student)
-
-        return User(firstName = "Bertolt",
+        return User(
+                firstName = "Bertolt",
                 lastName = "Brecht",
                 title = "Dr.",
                 address = address,
                 username = "brechtb33",
-                roles = roles)
+                roles = listOf(Instructor(), student)
+        )
     }
 
     /**
@@ -110,6 +152,16 @@ class OpenKlipsDatabaseInitializer(
         return Course(
                 name = "Accounting 101",
                 description = "Balance sheets, income and earnings. TL;DR -> MONEY!."
+        )
+    }
+
+    /**
+     * A course on ancient Roman language... Semper fi!
+     */
+    private fun ancientRoman203(): Course {
+        return Course(
+                name = "Ancient Roman Language 203",
+                description = "Cicero and the Boys."
         )
     }
 

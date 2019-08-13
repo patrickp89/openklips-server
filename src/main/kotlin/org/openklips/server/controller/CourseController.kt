@@ -16,7 +16,7 @@ class CourseController(
 ) {
     val log: Logger = LoggerFactory.getLogger(CourseController::class.java)
 
-    @RequestMapping("/course/")
+    @RequestMapping("/course")
     fun getCourses(): ResponseEntity<List<CourseDto>> {
         log.debug("Fetching all courses...")
         val courseDtos = courseService

@@ -15,11 +15,14 @@ class CourseService(private val courseRepository: CourseRepository) {
 
     private val log: Logger = LoggerFactory.getLogger(CourseService::class.java)
 
+    /**
+     * Persists a new course.
+     */
     @Transactional
     fun createCourse(course: Course): Course {
         log.debug("Saving course ($course)...")
         val savedCourse = courseRepository.save(course)
-        log.debug("Done! course.id = ${course.id}")
+        log.debug("Done! savedCourse.id = ${savedCourse.id}")
         return savedCourse
     }
 

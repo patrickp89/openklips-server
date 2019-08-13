@@ -12,6 +12,9 @@ class CourseDtoAssembler : DtoAssembler<Course, CourseDto> {
         courseDto.id = source.id
         courseDto.name = source.name
         courseDto.description = source.description
+
+        // TODO: ...
+
         return courseDto
     }
 }

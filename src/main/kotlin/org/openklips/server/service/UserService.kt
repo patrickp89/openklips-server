@@ -30,7 +30,7 @@ class UserService(private val userRepository: UserRepository) {
     fun createUser(user: User): User {
         log.debug("Saving user ($user)...")
         val savedUser = userRepository.save(user)
-        log.debug("Done! user.id = ${user.id}")
+        log.debug("Done! savedUser.id = ${savedUser.id}")
         return savedUser
     }
 

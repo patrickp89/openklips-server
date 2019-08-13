@@ -1,4 +1,6 @@
 # openklips-server
+[![Build Status](https://travis-ci.org/patrickp89/openklips-server.svg?branch=master)](https://travis-ci.org/patrickp89/openklips-server)
+
 An open-source, cloud-ready campus management software.
 
 ## How to build it

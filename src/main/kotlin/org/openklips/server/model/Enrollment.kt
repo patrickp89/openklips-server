@@ -13,7 +13,7 @@ class Enrollment(
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0,
 
-        @ManyToOne(cascade = [CascadeType.PERSIST])
+        @ManyToOne(cascade = [CascadeType.MERGE])
         val studyProgramme: StudyProgramme,
 
         @Temporal(TemporalType.DATE)
@@ -21,7 +21,7 @@ class Enrollment(
 
         // TODO: status -> model an enrollment's lifecycle!
 
-        @OneToMany(cascade = [CascadeType.PERSIST])
+        @OneToMany(cascade = [CascadeType.MERGE])
         val courses: List<Course>, // TODO: remodel! A student/enrollment rather has a
                                    // list of tuples (Course,Status,Exam) - this would also serve
                                    // as a proper n-to-m mapping table!

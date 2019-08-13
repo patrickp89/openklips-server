@@ -1,5 +1,6 @@
 package org.openklips.server.controller
 
+import org.openklips.server.model.Enrollment
 import org.openklips.server.model.Student
 import org.openklips.server.service.StudentService
 import org.slf4j.Logger
@@ -14,12 +15,20 @@ class StudentController(private val studentService: StudentService) {
 
     val log: Logger = LoggerFactory.getLogger(StudentController::class.java)
 
-    @RequestMapping("/student/{id}")
-    fun getStudent(@PathVariable id: Long): ResponseEntity<Student> {
-        log.debug("ID was: $id")
-        val student = studentService.getStudent(id)
+    @RequestMapping("/student/{studentId}")
+    fun getStudent(@PathVariable studentId: Long): ResponseEntity<Student> {
+        log.debug("The studentID (Matrikelnummer) was: $studentId")
+        val student = studentService.getStudentForStudentId(studentId)
         // TODO: when(student) {...}
         return ResponseEntity.of(student)
+    }
+
+    @RequestMapping("/student/{studentId}/enrollment")
+    fun getStudentEnrollments(@PathVariable studentId: Long): ResponseEntity<List<Enrollment>> {
+        log.debug("The studentID (Matrikelnummer) was: $studentId")
+        val enrollments: List<Enrollment> = studentService.getStudentEnrollments(studentId)
+        // TODO: DTO!
+        return ResponseEntity.ok(enrollments)
     }
 
 }
