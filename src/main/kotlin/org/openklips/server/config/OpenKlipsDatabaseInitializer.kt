@@ -5,7 +5,6 @@ import org.openklips.server.service.CourseService
 import org.openklips.server.service.StudyProgrammeService
 import org.openklips.server.service.UserService
 import java.time.LocalDate
-import java.time.ZoneId
 import java.util.*
 
 class OpenKlipsDatabaseInitializer(
@@ -13,8 +12,6 @@ class OpenKlipsDatabaseInitializer(
         private val courseService: CourseService,
         private val studyProgrammeService: StudyProgrammeService
 ) {
-
-    private val defaultTimezoneId: ZoneId = ZoneId.of("ECT", ZoneId.SHORT_IDS)
 
     /**
      * Initializes the database with default data.
@@ -36,7 +33,7 @@ class OpenKlipsDatabaseInitializer(
         )
 
         // create test users:
-        userService.createUser(maxMustermann(listOf(), mscLiterature))
+        userService.createUser(maxMustermann(listOf(ancientRoman203Course), mscLiterature))
         userService.createUser(lieschenMueller())
         userService.createUser(bertoltBrecht())
     }
@@ -59,7 +56,7 @@ class OpenKlipsDatabaseInitializer(
         val startDate = Date.from(
                 LocalDate
                         .of(2019, 4, 1)
-                        .atStartOfDay(defaultTimezoneId)
+                        .atStartOfDay(OpenKlipsServerConfig.defaultTimezoneId)
                         .toInstant()
         )
         val litEnrollment = Enrollment(
@@ -121,7 +118,7 @@ class OpenKlipsDatabaseInitializer(
         )
 
         val student = Student(
-                studentId = 654545L,
+                studentId = null,
                 enrollments = listOf()
         )
 

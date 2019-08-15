@@ -1,6 +1,7 @@
 package org.openklips.server.service
 
 import org.openklips.server.model.Role
+import org.openklips.server.model.Student
 import org.openklips.server.model.User
 import org.openklips.server.persistence.UserRepository
 import org.slf4j.Logger
@@ -31,6 +32,23 @@ class UserService(private val userRepository: UserRepository) {
         log.debug("Saving user ($user)...")
         val savedUser = userRepository.save(user)
         log.debug("Done! savedUser.id = ${savedUser.id}")
+
+        // when creating a new user with the role "Student", the
+        // studentId (Matrikelnummer) is optional -> if it was not
+        // provided, we use the user's technical ID (from the Hibernate
+        // sequence) as a studentId:
+        val userIsStudent = savedUser
+                .roles
+                .filterIsInstance<Student>()
+                .isNotEmpty()
+        if (userIsStudent) {
+            val studentRole = savedUser
+                    .roles
+                    .filterIsInstance<Student>()
+                    .first()
+            studentRole.studentId = studentRole.studentId ?: studentRole.id
+        }
+
         return savedUser
     }
 

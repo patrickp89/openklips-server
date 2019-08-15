@@ -31,6 +31,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
   /course:
     get:
       summary: Get all courses
@@ -52,6 +53,66 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/Error"
+
+  /student/{studentId}:
+    get:
+      summary: Get a specific student for its studentId
+      operationId: getStudentEnrollments
+      tags:
+        - student
+        - enrollment
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's studentId (Matrikelnummer)
+      responses:
+        '200':
+          description: An array of enrollment objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StudentDto"
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+  /student/{studentId}/enrollment:
+    get:
+      summary: Get the enrollments of a specific student
+      operationId: getStudentEnrollments
+      tags:
+        - student
+        - enrollment
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's studentId (Matrikelnummer)
+      responses:
+        '200':
+          description: An array of enrollment objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EnrollmentDto"
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     UserDto:
@@ -80,6 +141,18 @@ components:
           items:
             $ref: '#/components/schemas/RoleDto'
 
+    StudentDto:
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        enrollments:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnrollmentDto'
+
     AddressDto:
       properties:
         id:
@@ -103,6 +176,7 @@ components:
         id:
           type: integer
           format: int64
+          description: This is (an arbitrary) ID that identifies the student/instructor/... in later calls. For a student it will very likely be his/her studentId (Matrikelnummer), but could be configured differently
         roleType:
           $ref: '#/components/schemas/RoleType'
 
@@ -122,8 +196,19 @@ components:
           format: int64
         name:
           type: string
-        description:
+        courseDescription:
           type: string
+
+    EnrollmentDto:
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          format: date
 
     Error:
       required:

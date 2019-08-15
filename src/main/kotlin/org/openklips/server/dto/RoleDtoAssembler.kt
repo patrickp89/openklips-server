@@ -28,7 +28,17 @@ class RoleDtoAssembler : DtoAssembler<Role, RoleDto> {
 
     private fun assembleRoleVariant(roleType: RoleType, source: Role): RoleDto {
         val roleDto = RoleDto()
-        roleDto.id = source.id
+        roleDto.id = when (roleType) {
+            RoleType.INSTRUCTOR -> source.id
+            RoleType.STUDENT -> {
+                // for a student, we displey his/her studentId:
+                if ((source as Student).studentId == null) {
+                    source.id
+                } else {
+                    source.studentId
+                }
+            }
+        }
 
         return when (roleType) {
             RoleType.STUDENT -> assembleStudent(source as Student, roleDto)
@@ -38,13 +48,11 @@ class RoleDtoAssembler : DtoAssembler<Role, RoleDto> {
 
     private fun assembleStudent(source: Student, studentDto: RoleDto): RoleDto {
         studentDto.roleType = RoleType.STUDENT
-        // TODO: studentDto.studentId = source.studentId
         return studentDto
     }
 
     private fun assembleInstructor(source: Instructor, instructorDto: RoleDto): RoleDto {
         instructorDto.roleType = RoleType.INSTRUCTOR
-        // TODO: ...
         return instructorDto
     }
 

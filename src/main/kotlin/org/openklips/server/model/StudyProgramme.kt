@@ -9,7 +9,6 @@ import javax.persistence.*
  */
 @Entity
 class StudyProgramme(
-
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0,
 
@@ -18,9 +17,9 @@ class StudyProgramme(
         @Enumerated(EnumType.STRING)
         val degreeType: DegreeType,
 
-        val examinationRegulationVersion: String, // a identifier for a certaion version of the exam. regulation
+        // TODO: @OneToOne !
+        val examinationRegulationVersion: String, // a identifier for a certain version of the exam. regulation
 
         @OneToMany(cascade = [CascadeType.MERGE])
         val courses: List<Course> // TODO: remodel! A course is part of a certain _Section_!
-
 )

@@ -28,7 +28,10 @@ class CourseCrudTest {
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
-        assertThat(response.body.size, Is(3))
+
+        val courseDtos: Array<CourseDto> = response.body
+                ?: throw NullPointerException("This should never happen.")
+        assertThat(courseDtos.size, Is(3))
     }
 
 }

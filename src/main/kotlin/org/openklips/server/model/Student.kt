@@ -13,7 +13,7 @@ import javax.persistence.OneToMany
 @Entity
 class Student(
         @Column(unique = true)
-        val studentId: Long, // the "Matrikelnummer"
+        var studentId: Long?, // the "Matrikelnummer": might be equal to the (inherited) technical ID "id"
 
         @OneToMany(cascade = [CascadeType.ALL])
         val enrollments: List<Enrollment>

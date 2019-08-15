@@ -17,6 +17,8 @@ class StudentService(private val studentRepository: StudentRepository) {
 
     private val log: Logger = LoggerFactory.getLogger(StudentService::class.java)
 
+    // TODO: add a method that generates a new Matrikelnummer!
+
     @Transactional
     fun getStudentCount(): Long {
         log.debug("studentRepository.count() ...")
@@ -41,9 +43,17 @@ class StudentService(private val studentRepository: StudentRepository) {
      * @param studentId the student's student ID (Matrikelnummer)
      */
     @Transactional
-    fun getStudentEnrollments(studentId: Long): List<Enrollment> {
-//        studentRepository.
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun getStudentEnrollments(studentId: Long): List<Enrollment>? {
+        val studentResult = studentRepository.findByStudentId(studentId)
+        return if (studentResult.isPresent) {
+            val student = studentResult.get()
+            log.debug("Found student $student !")
+            val enrollments = student.enrollments
+            log.debug("...with ${enrollments.size} enrollments!")
+            enrollments
+        } else {
+            null
+        }
     }
 
 }

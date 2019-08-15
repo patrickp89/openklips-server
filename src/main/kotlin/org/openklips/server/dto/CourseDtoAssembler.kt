@@ -11,7 +11,7 @@ class CourseDtoAssembler : DtoAssembler<Course, CourseDto> {
         val courseDto = CourseDto()
         courseDto.id = source.id
         courseDto.name = source.name
-        courseDto.description = source.description
+        courseDto.courseDescription = source.description
 
         // TODO: ...
 
