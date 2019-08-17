@@ -17,8 +17,6 @@ class StudentService(private val studentRepository: StudentRepository) {
 
     private val log: Logger = LoggerFactory.getLogger(StudentService::class.java)
 
-    // TODO: add a method that generates a new Matrikelnummer!
-
     @Transactional
     fun getStudentCount(): Long {
         log.debug("studentRepository.count() ...")
@@ -33,7 +31,14 @@ class StudentService(private val studentRepository: StudentRepository) {
     @Transactional
     fun getStudentForStudentId(studentId: Long): Optional<Student> {
         log.debug("Looking up student by his/her studentId (Matrikelnummer): $studentId")
-        return studentRepository.findByStudentId(studentId)
+        val studentOptional = studentRepository.findByStudentId(studentId)
+        if (studentOptional.isPresent) {
+            val student = studentOptional.get()
+            log.debug("Found student: $student!")
+        } else {
+            log.debug("Couldn't find a student for studentId '$studentId'!")
+        }
+        return studentOptional
         // TODO: sum type = T x NotFound
     }
 

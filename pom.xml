@@ -180,6 +180,9 @@
                             <modelPackage>org.openklips.server.model.dto</modelPackage>
                             <generateModels>true</generateModels>
                             <generateApis>false</generateApis>
+                            <configOptions>
+                                <dateLibrary>java8-localdatetime</dateLibrary>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

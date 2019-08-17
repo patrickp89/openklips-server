@@ -2,3 +2,5 @@ language: java
 jdk:
   - openjdk12
 dist: bionic
+before_install:
+  - export TZ=Europe/Berlin

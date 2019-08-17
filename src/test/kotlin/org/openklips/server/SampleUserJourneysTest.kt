@@ -3,7 +3,6 @@ package org.openklips.server
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.openklips.server.model.dto.RoleDto
@@ -18,6 +17,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.test.context.junit4.SpringRunner
+import java.time.Month
 import org.hamcrest.Matchers.`is` as Is
 
 /**
@@ -40,7 +40,6 @@ class SampleUserJourneysTest {
      * including the study programmes, that he is enrolled in.
      */
     @Test
-    @Ignore
     fun testStudentLoginAndCourseOverview() {
         val testUserName = "mustermannm1"
         val testStudentId = 1234567L
@@ -78,7 +77,14 @@ class SampleUserJourneysTest {
         val studentDto: StudentDto = studentInfoResponse.body
                 ?: throw NullPointerException("This should never happen.")
         assertThat(studentDto.id, Is(testStudentId))
-//        assertThat(studentDto.enrollments ...)
+        assertThat(studentDto.enrollments.size, Is(1))
+        val enrollment = studentDto
+                .enrollments
+                .first()
+        assertThat(enrollment.startDate.year, Is(2019))
+        assertThat(enrollment.startDate.month, Is(Month.APRIL))
+        assertThat(enrollment.startDate.dayOfMonth, Is(1))
+        // TODO: add studyProgramme, courses, and exams to the response!
     }
 
 }

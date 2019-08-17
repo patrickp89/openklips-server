@@ -5,6 +5,7 @@ import org.openklips.server.service.CourseService
 import org.openklips.server.service.StudyProgrammeService
 import org.openklips.server.service.UserService
 import java.time.LocalDate
+import java.time.Month
 import java.util.*
 
 class OpenKlipsDatabaseInitializer(
@@ -55,7 +56,7 @@ class OpenKlipsDatabaseInitializer(
 
         val startDate = Date.from(
                 LocalDate
-                        .of(2019, 4, 1)
+                        .of(2019, Month.APRIL, 1)
                         .atStartOfDay(OpenKlipsServerConfig.defaultTimezoneId)
                         .toInstant()
         )

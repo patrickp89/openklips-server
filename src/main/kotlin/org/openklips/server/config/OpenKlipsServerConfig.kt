@@ -1,16 +1,16 @@
 package org.openklips.server.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import org.openklips.server.service.CourseService
 import org.openklips.server.service.StudyProgrammeService
 import org.openklips.server.service.UserService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
-import com.fasterxml.jackson.databind.ObjectMapper
-
+import java.util.*
 
 
 @Configuration
@@ -18,7 +18,6 @@ class OpenKlipsServerConfig {
 
     companion object {
         private val defaultZoneId = "ECT"
-        val defaultThreeTenTimezoneId: org.threeten.bp.ZoneId = org.threeten.bp.ZoneId.of(defaultZoneId, org.threeten.bp.ZoneId.SHORT_IDS)
         val defaultTimezoneId: java.time.ZoneId = java.time.ZoneId.of(defaultZoneId, java.time.ZoneId.SHORT_IDS)
     }
 
@@ -41,16 +40,27 @@ class OpenKlipsServerConfig {
         }
     }
 
-
     /**
-     * A JSR310-capable JSON marshaller.
+     * A timezone-aware Jackson JSON marshaller.
      */
     @Bean
-    fun jacksonMarshaller(): ObjectMapper {
-        return ObjectMapper()
-//                .registerModule(ParameterNamesModule())
-//                .registerModule(Jdk8Module())
-//                .registerModule(JavaTimeModule())
+    fun jacksonMarshaller(timeZone: TimeZone): ObjectMapper {
+        // serializing/deserializing dates should be based on our default timezone:
+        val objectMapper = ObjectMapper()
+        objectMapper.setTimeZone(timeZone)
+        objectMapper.registerModule(ParameterNamesModule())
+        objectMapper.registerModule(Jdk8Module())
+        objectMapper.registerModule(JavaTimeModule())
+        return objectMapper
+    }
+
+    /**
+     * The global timezone.
+     */
+    @Bean
+    fun timezone(): TimeZone? {
+        // TODO: the time zone should be configurable! add a @Value("${timezone}") parameter!
+        return TimeZone.getTimeZone(defaultTimezoneId)
     }
 
 }
