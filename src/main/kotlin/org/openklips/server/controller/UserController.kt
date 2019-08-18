@@ -2,8 +2,7 @@ package org.openklips.server.controller
 
 import org.openklips.server.dto.RoleDtoAssembler
 import org.openklips.server.dto.UserDtoAssembler
-import org.openklips.server.model.dto.RoleDto
-import org.openklips.server.model.dto.UserDto
+import org.openklips.server.model.dto.*
 import org.openklips.server.service.UserService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -23,7 +22,7 @@ class UserController(
     private val log: Logger = LoggerFactory.getLogger(UserController::class.java)
 
     @RequestMapping("/user/{username}")
-    fun getUser(@PathVariable username: String): ResponseEntity<UserDto> {
+    fun getUser(@PathVariable username: String): ResponseEntity<User> {
         log.debug("username was: '$username'")
         val user = userService.getUser(username)
 
@@ -35,7 +34,7 @@ class UserController(
     }
 
     @RequestMapping("/user/{username}/roles")
-    fun getRoles(@PathVariable username: String): ResponseEntity<List<RoleDto>> {
+    fun getRoles(@PathVariable username: String): ResponseEntity<List<Role>> {
         log.debug("username was: '$username'")
         val roles = userService.getRoles(username)
         return if (roles == null) {

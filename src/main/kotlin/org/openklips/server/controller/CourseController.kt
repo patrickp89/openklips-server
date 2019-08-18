@@ -1,7 +1,7 @@
 package org.openklips.server.controller
 
 import org.openklips.server.dto.CourseDtoAssembler
-import org.openklips.server.model.dto.CourseDto
+import org.openklips.server.model.dto.*
 import org.openklips.server.service.CourseService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -17,7 +17,7 @@ class CourseController(
     val log: Logger = LoggerFactory.getLogger(CourseController::class.java)
 
     @RequestMapping("/course")
-    fun getCourses(): ResponseEntity<List<CourseDto>> {
+    fun getCourses(): ResponseEntity<List<Course>> {
         log.debug("Fetching all courses...")
         val courseDtos = courseService
                 .getAllCourses()

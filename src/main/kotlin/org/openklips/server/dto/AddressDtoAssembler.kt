@@ -1,14 +1,12 @@
 package org.openklips.server.dto
 
-import org.openklips.server.model.Address
-import org.openklips.server.model.dto.AddressDto
 import org.springframework.stereotype.Component
 
 @Component
-class AddressDtoAssembler : DtoAssembler<Address, AddressDto> {
+class AddressDtoAssembler : DtoAssembler<org.openklips.server.model.Address, org.openklips.server.model.dto.Address> {
 
-    override fun assemble(source: Address): AddressDto {
-        val addressDto = AddressDto()
+    override fun assemble(source: org.openklips.server.model.Address): org.openklips.server.model.dto.Address {
+        val addressDto = org.openklips.server.model.dto.Address()
         addressDto.country = source.country
         addressDto.city = source.city
         addressDto.id = source.id

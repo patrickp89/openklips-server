@@ -5,10 +5,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.openklips.server.model.dto.RoleDto
-import org.openklips.server.model.dto.RoleType
-import org.openklips.server.model.dto.StudentDto
-import org.openklips.server.model.dto.UserDto
+import org.openklips.server.model.dto.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,13 +42,13 @@ class SampleUserJourneysTest {
         val testStudentId = 1234567L
 
         // A) fetch Max' user info:
-        val response: ResponseEntity<UserDto> = restTemplate
-                .getForEntity("/user/{username}", UserDto::class.java, testUserName)
+        val response: ResponseEntity<User> = restTemplate
+                .getForEntity("/user/{username}", User::class.java, testUserName)
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
 
-        val userDto: UserDto = response.body
+        val userDto: User = response.body
                 ?: throw NullPointerException("This should never happen.")
         assertThat(userDto.firstName, Is("Max"))
         assertThat(userDto.firstName, Is(not(nullValue())))
@@ -61,20 +58,20 @@ class SampleUserJourneysTest {
         log.debug("Max has ${userDto.roles.size} role(s):")
         userDto.roles.forEach { log.debug("ID: ${it.id}, roleType: ${it.roleType}") }
         assertThat(userDto.roles.size, Is(1))
-        val role: RoleDto = userDto
+        val role: Role = userDto
                 .roles
                 .first()
         assertThat(role.roleType, Is(RoleType.STUDENT))
         assertThat(role.id, Is(testStudentId))
 
         // B) fetch his student information (incl. his enrollments):
-        val studentInfoResponse: ResponseEntity<StudentDto> = restTemplate
-                .getForEntity("/student/{studentId}", StudentDto::class.java, testStudentId)
+        val studentInfoResponse: ResponseEntity<Student> = restTemplate
+                .getForEntity("/student/{studentId}", Student::class.java, testStudentId)
         assertThat(studentInfoResponse, Is(not(nullValue())))
         assertThat(studentInfoResponse.statusCode, Is(HttpStatus.OK))
         assertThat(studentInfoResponse.body, Is(not(nullValue())))
 
-        val studentDto: StudentDto = studentInfoResponse.body
+        val studentDto: Student = studentInfoResponse.body
                 ?: throw NullPointerException("This should never happen.")
         assertThat(studentDto.id, Is(testStudentId))
         assertThat(studentDto.enrollments.size, Is(1))

@@ -5,7 +5,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.openklips.server.model.dto.CourseDto
+import org.openklips.server.model.dto.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -23,13 +23,13 @@ class CourseCrudTest {
 
     @Test
     fun testGetCourses() {
-        val response: ResponseEntity<Array<CourseDto>> = restTemplate
-                .getForEntity("/course", Array<CourseDto>::class.java)
+        val response: ResponseEntity<Array<Course>> = restTemplate
+                .getForEntity("/course", Array<Course>::class.java)
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
 
-        val courseDtos: Array<CourseDto> = response.body
+        val courseDtos: Array<Course> = response.body
                 ?: throw NullPointerException("This should never happen.")
         assertThat(courseDtos.size, Is(3))
     }

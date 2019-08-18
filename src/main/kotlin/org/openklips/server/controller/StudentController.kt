@@ -2,8 +2,7 @@ package org.openklips.server.controller
 
 import org.openklips.server.dto.EnrollmentDtoAssembler
 import org.openklips.server.dto.StudentDtoAssembler
-import org.openklips.server.model.dto.EnrollmentDto
-import org.openklips.server.model.dto.StudentDto
+import org.openklips.server.model.dto.*
 import org.openklips.server.service.StudentService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -23,7 +22,7 @@ class StudentController(
     val log: Logger = LoggerFactory.getLogger(StudentController::class.java)
 
     @RequestMapping("/student/{studentId}")
-    fun getStudent(@PathVariable studentId: Long): ResponseEntity<StudentDto> {
+    fun getStudent(@PathVariable studentId: Long): ResponseEntity<Student> {
         log.debug("The studentID (Matrikelnummer) was: $studentId")
         val studentResult = studentService.getStudentForStudentId(studentId)
         return if (studentResult.isPresent) {
@@ -37,13 +36,13 @@ class StudentController(
     }
 
     @RequestMapping("/student/{studentId}/enrollment")
-    fun getStudentEnrollments(@PathVariable studentId: Long): ResponseEntity<List<EnrollmentDto>> {
+    fun getStudentEnrollments(@PathVariable studentId: Long): ResponseEntity<List<Enrollment>> {
         log.debug("The studentID (Matrikelnummer) was: $studentId")
         val enrollments = studentService.getStudentEnrollments(studentId)
         return if (enrollments == null) {
             ResponseEntity(HttpStatus.NOT_FOUND)
         } else {
-            val enrollmentDtos: List<EnrollmentDto> = enrollments
+            val enrollmentDtos: List<Enrollment> = enrollments
                     .map { enrollmentDtoAssembler.assemble(it) }
                     .toList()
             return ResponseEntity.ok(enrollmentDtos)

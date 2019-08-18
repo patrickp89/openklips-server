@@ -5,8 +5,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.openklips.server.model.dto.RoleDto
-import org.openklips.server.model.dto.UserDto
+import org.openklips.server.model.dto.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -25,13 +24,13 @@ class UserCrudTest {
     @Test
     fun testGetUser() {
         val testuserName = "mustermannm1"
-        val response: ResponseEntity<UserDto> = restTemplate
-                .getForEntity("/user/{username}", UserDto::class.java, testuserName)
+        val response: ResponseEntity<User> = restTemplate
+                .getForEntity("/user/{username}", User::class.java, testuserName)
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
 
-        val userDto: UserDto = response.body
+        val userDto: User = response.body
                 ?: throw NullPointerException("This should never happen.")
         assertThat(userDto.firstName, Is("Max"))
     }
@@ -39,13 +38,13 @@ class UserCrudTest {
     @Test
     fun testGetUserRoles() {
         val testuserName = "mustermannm1"
-        val response: ResponseEntity<Array<RoleDto>> = restTemplate
-                .getForEntity("/user/{username}/roles", Array<RoleDto>::class.java, testuserName)
+        val response: ResponseEntity<Array<Role>> = restTemplate
+                .getForEntity("/user/{username}/roles", Array<Role>::class.java, testuserName)
         assertThat(response, Is(not(nullValue())))
         assertThat(response.statusCode, Is(HttpStatus.OK))
         assertThat(response.body, Is(not(nullValue())))
 
-        val roleDtos: Array<RoleDto> = response.body
+        val roleDtos: Array<Role> = response.body
                 ?: throw NullPointerException("This should never happen.")
         assertThat(roleDtos.size, Is(1))
     }

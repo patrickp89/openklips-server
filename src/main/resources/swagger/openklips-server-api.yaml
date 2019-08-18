@@ -24,7 +24,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserDto"
+                $ref: "#/components/schemas/User"
         default:
           description: unexpected error
           content:
@@ -46,7 +46,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/CourseDto"
+                  $ref: "#/components/schemas/Course"
           default:
             description: unexpected error
             content:
@@ -76,7 +76,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/StudentDto"
+                  $ref: "#/components/schemas/Student"
           default:
             description: unexpected error
             content:
@@ -105,7 +105,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/EnrollmentDto"
+                  $ref: "#/components/schemas/Enrollment"
           default:
             description: unexpected error
             content:
@@ -115,7 +115,7 @@ paths:
 
 components:
   schemas:
-    UserDto:
+    User:
       required:
         - id
         - username
@@ -135,13 +135,13 @@ components:
         title:
           type: string
         address:
-          $ref: '#/components/schemas/AddressDto'
+          $ref: '#/components/schemas/Address'
         roles:
           type: array
           items:
-            $ref: '#/components/schemas/RoleDto'
+            $ref: '#/components/schemas/Role'
 
-    StudentDto:
+    Student:
       required:
         - id
       properties:
@@ -151,9 +151,9 @@ components:
         enrollments:
           type: array
           items:
-            $ref: '#/components/schemas/EnrollmentDto'
+            $ref: '#/components/schemas/Enrollment'
 
-    AddressDto:
+    Address:
       properties:
         id:
           type: integer
@@ -171,7 +171,7 @@ components:
         additionalDetails:
           type: string
 
-    RoleDto:
+    Role:
       properties:
         id:
           type: integer
@@ -186,7 +186,7 @@ components:
         - student
         - instructor
 
-    CourseDto:
+    Course:
       required:
         - id
         - name
@@ -199,7 +199,7 @@ components:
         courseDescription:
           type: string
 
-    EnrollmentDto:
+    Enrollment:
       required:
         - id
       properties:

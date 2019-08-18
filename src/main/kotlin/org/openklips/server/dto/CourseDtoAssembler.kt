@@ -1,14 +1,12 @@
 package org.openklips.server.dto
 
-import org.openklips.server.model.Course
-import org.openklips.server.model.dto.CourseDto
 import org.springframework.stereotype.Component
 
 @Component
-class CourseDtoAssembler : DtoAssembler<Course, CourseDto> {
+class CourseDtoAssembler : DtoAssembler<org.openklips.server.model.Course, org.openklips.server.model.dto.Course> {
 
-    override fun assemble(source: Course): CourseDto {
-        val courseDto = CourseDto()
+    override fun assemble(source: org.openklips.server.model.Course): org.openklips.server.model.dto.Course {
+        val courseDto = org.openklips.server.model.dto.Course()
         courseDto.id = source.id
         courseDto.name = source.name
         courseDto.courseDescription = source.description
