@@ -1,8 +1,8 @@
 package org.openklips.server.service
 
-import org.openklips.server.model.Role
-import org.openklips.server.model.Student
-import org.openklips.server.model.User
+import org.openklips.server.domain.Role
+import org.openklips.server.domain.Student
+import org.openklips.server.domain.User
 import org.openklips.server.persistence.UserRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

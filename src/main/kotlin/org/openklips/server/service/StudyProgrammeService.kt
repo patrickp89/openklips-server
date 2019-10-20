@@ -1,6 +1,6 @@
 package org.openklips.server.service
 
-import org.openklips.server.model.StudyProgramme
+import org.openklips.server.domain.StudyProgramme
 import org.openklips.server.persistence.StudyProgrammeRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

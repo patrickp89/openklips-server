@@ -1,7 +1,7 @@
 package org.openklips.server.service
 
-import org.openklips.server.model.Enrollment
-import org.openklips.server.model.Student
+import org.openklips.server.domain.Enrollment
+import org.openklips.server.domain.Student
 import org.openklips.server.persistence.StudentRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

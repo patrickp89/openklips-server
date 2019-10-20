@@ -1,4 +1,4 @@
-package org.openklips.server.model
+package org.openklips.server.domain
 
 import java.util.*
 import javax.persistence.*

@@ -1,6 +1,6 @@
 package org.openklips.server.config
 
-import org.openklips.server.model.*
+import org.openklips.server.domain.*
 import org.openklips.server.service.CourseService
 import org.openklips.server.service.StudyProgrammeService
 import org.openklips.server.service.UserService

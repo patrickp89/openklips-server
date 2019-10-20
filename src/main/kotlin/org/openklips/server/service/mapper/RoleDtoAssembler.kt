@@ -1,14 +1,15 @@
 package org.openklips.server.dto
 
-import org.openklips.server.model.Instructor
-import org.openklips.server.model.Student
+import org.openklips.server.domain.Instructor
+import org.openklips.server.domain.Role
+import org.openklips.server.domain.Student
 import org.openklips.server.model.dto.RoleType
 import org.springframework.stereotype.Component
 
 @Component
-class RoleDtoAssembler : DtoAssembler<org.openklips.server.model.Role, org.openklips.server.model.dto.Role> {
+class RoleDtoAssembler : DtoAssembler<Role, org.openklips.server.model.dto.Role> {
 
-    override fun assemble(source: org.openklips.server.model.Role): org.openklips.server.model.dto.Role {
+    override fun assemble(source: Role): org.openklips.server.model.dto.Role {
         computeRoleType(source).fold({ t ->
             return assembleRoleVariant(t, source)
         }, { e ->
@@ -16,7 +17,7 @@ class RoleDtoAssembler : DtoAssembler<org.openklips.server.model.Role, org.openk
         })
     }
 
-    private fun computeRoleType(role: org.openklips.server.model.Role): Result<RoleType> {
+    private fun computeRoleType(role: Role): Result<RoleType> {
         return when (role) {
             is Instructor -> Result.success(RoleType.INSTRUCTOR)
             is Student -> Result.success(RoleType.STUDENT)
@@ -24,7 +25,7 @@ class RoleDtoAssembler : DtoAssembler<org.openklips.server.model.Role, org.openk
         }
     }
 
-    private fun assembleRoleVariant(roleType: RoleType, source: org.openklips.server.model.Role): org.openklips.server.model.dto.Role {
+    private fun assembleRoleVariant(roleType: RoleType, source: Role): org.openklips.server.model.dto.Role {
         val roleDto = org.openklips.server.model.dto.Role()
         roleDto.id = when (roleType) {
             RoleType.INSTRUCTOR -> source.id

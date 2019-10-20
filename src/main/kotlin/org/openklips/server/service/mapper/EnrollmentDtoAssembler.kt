@@ -1,6 +1,7 @@
 package org.openklips.server.dto
 
 import org.openklips.server.config.OpenKlipsServerConfig
+import org.openklips.server.domain.Enrollment
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -8,11 +9,11 @@ import java.time.LocalDate
 import java.util.*
 
 @Component
-class EnrollmentDtoAssembler : DtoAssembler<org.openklips.server.model.Enrollment, org.openklips.server.model.dto.Enrollment> {
+class EnrollmentDtoAssembler : DtoAssembler<Enrollment, org.openklips.server.model.dto.Enrollment> {
 
     private val log: Logger = LoggerFactory.getLogger(EnrollmentDtoAssembler::class.java)
 
-    override fun assemble(source: org.openklips.server.model.Enrollment): org.openklips.server.model.dto.Enrollment {
+    override fun assemble(source: Enrollment): org.openklips.server.model.dto.Enrollment {
         log.debug("Creating DTO for enrollment: $source")
         val enrollmentDto = org.openklips.server.model.dto.Enrollment()
         enrollmentDto.id = source.id

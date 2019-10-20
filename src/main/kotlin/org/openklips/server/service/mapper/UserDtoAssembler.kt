@@ -1,14 +1,15 @@
 package org.openklips.server.dto
 
+import org.openklips.server.domain.User
 import org.springframework.stereotype.Component
 
 @Component
 class UserDtoAssembler(
         private val addressDtoAssembler: AddressDtoAssembler,
         private val roleDtoAssembler: RoleDtoAssembler
-) : DtoAssembler<org.openklips.server.model.User, org.openklips.server.model.dto.User> {
+) : DtoAssembler<User, org.openklips.server.model.dto.User> {
 
-    override fun assemble(source: org.openklips.server.model.User): org.openklips.server.model.dto.User {
+    override fun assemble(source: User): org.openklips.server.model.dto.User {
         val addressDto = addressDtoAssembler.assemble(source.address)
         val roleDtos: List<org.openklips.server.model.dto.Role> = source
                 .roles

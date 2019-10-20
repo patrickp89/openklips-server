@@ -1,6 +1,6 @@
 package org.openklips.server.service
 
-import org.openklips.server.model.Course
+import org.openklips.server.domain.Course
 import org.openklips.server.persistence.CourseRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
