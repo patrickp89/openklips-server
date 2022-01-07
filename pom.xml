@@ -13,7 +13,7 @@
         <jdk.version>1.8</jdk.version>
         <maven.compiler-plugin.version>3.7.0</maven.compiler-plugin.version>
         <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
-        <h2.version>1.4.199</h2.version>
+        <h2.version>2.0.206</h2.version>
         <jackson.version>2.9.9</jackson.version>
     </properties>
 
